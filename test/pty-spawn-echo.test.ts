@@ -52,6 +52,11 @@ describe('ptySpawn Integration', () => {
       }
     )
 
+    expect(typeof result).toBe('string')
+    if (typeof result !== 'string') {
+      throw new Error('Expected ptySpawn to return a string result')
+    }
+
     expect(result).toContain('<pty_spawned>')
     expect(result).toContain('Command: echo Hello World')
     expect(result).toContain('Status: running')

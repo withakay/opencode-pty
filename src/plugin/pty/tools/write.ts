@@ -2,7 +2,9 @@ import { tool } from '@opencode-ai/plugin'
 import { manager } from '../manager.ts'
 import { checkCommandPermission } from '../permissions.ts'
 import { buildSessionNotFoundError } from '../utils.ts'
-import DESCRIPTION from './write.txt'
+
+const DESCRIPTION =
+  'Send input, commands, or control characters to a running PTY session. Call pty_help for detailed usage.'
 
 const ETX = String.fromCharCode(3)
 const EOT = String.fromCharCode(4)

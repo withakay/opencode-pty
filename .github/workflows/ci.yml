@@ -57,18 +57,14 @@ jobs:
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
 
-  nix-flake-test:
-    name: Devenv CI
-    runs-on: ubuntu-latest
+  brew-make-test:
+    name: Homebrew Makefile CI
+    runs-on: macos-latest
     permissions:
       contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Install Determinate Nix
-        uses: DeterminateSystems/determinate-nix-action@v3
-      - name: Install devenv
-        run: nix profile add nixpkgs#devenv
       - name: Cache Bun dependencies
         uses: actions/cache@v5
         with:
@@ -76,18 +72,11 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-bun-
-      - name: Build (Devenv shell)
-        run: devenv shell -- bun build:prod
-
-      - name: Quality checks (bun test)
-        run: devenv shell -- bun unittest
-      - name: Quality checks (typecheck)
-        run: devenv shell -- bun typecheck
-      - name: Quality checks (lint)
-        run: devenv shell -- bun lint
-      - name: Quality checks (format)
-        run: devenv shell -- bun format
-      - name: Install Playwright Browsers (Devenv shell)
-        run: devenv shell -- bash -lc 'PLAYWRIGHT_BROWSERS_PATH=0 bunx playwright install --with-deps chromium firefox'
-      - name: Quality checks (test:e2e)
-        run: devenv shell -- bash -lc 'PLAYWRIGHT_BROWSERS_PATH=0 bun test:e2e'
+      - name: Install Homebrew dependencies
+        run: brew bundle
+      - name: Install Bun dependencies
+        run: make deps
+      - name: Check
+        run: make check
+      - name: Unit tests
+        run: make test

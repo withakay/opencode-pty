@@ -1,7 +1,5 @@
 import type { OpencodeClient } from '@opencode-ai/sdk'
-import { semver } from 'bun'
 import { Terminal } from 'bun-pty'
-import { version as bunPtyVersion } from 'bun-pty/package.json'
 import { NotificationManager } from './notification-manager.ts'
 import { OutputManager } from './output-manager.ts'
 import { SessionLifecycleManager } from './session-lifecycle.ts'

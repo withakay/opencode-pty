@@ -1,7 +1,8 @@
 import { tool } from '@opencode-ai/plugin'
 import { manager } from '../manager.ts'
 import { buildSessionNotFoundError } from '../utils.ts'
-import DESCRIPTION from './kill.txt'
+
+const DESCRIPTION = 'Terminate a PTY session and optionally remove its retained output buffer.'
 
 export const ptyKill = tool({
   description: DESCRIPTION,

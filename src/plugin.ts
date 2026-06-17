@@ -6,11 +6,25 @@ import { ptyWrite } from './plugin/pty/tools/write.ts'
 import { ptyRead } from './plugin/pty/tools/read.ts'
 import { ptyList } from './plugin/pty/tools/list.ts'
 import { ptyKill } from './plugin/pty/tools/kill.ts'
+import { ptyHelp } from './plugin/pty/tools/help.ts'
 import { PTYServer } from './web/server/server.ts'
 import open from 'open'
 
 const ptyOpenClientCommand = 'pty-open-background-spy'
 const ptyShowServerUrlCommand = 'pty-show-server-url'
+
+const TOOL_DESCRIPTIONS: Record<string, string> = {
+  pty_spawn:
+    'Start an interactive background PTY session for long-running or interactive commands. Call pty_help for detailed usage.',
+  pty_write:
+    'Send input, commands, or control characters to a running PTY session. Call pty_help for detailed usage.',
+  pty_read:
+    'Read buffered output from a PTY session, optionally with pagination or regex filtering. Call pty_help for details.',
+  pty_list:
+    'List active and retained PTY sessions with IDs, status, commands, and output line counts.',
+  pty_kill: 'Terminate a PTY session and optionally remove its retained output buffer.',
+  pty_help: 'Load detailed usage guidance for opencode-pty tools.',
+}
 
 export const PTYPlugin = async ({ client, directory }: PluginContext): Promise<PluginResult> => {
   initPermissions(client, directory)
@@ -50,6 +64,13 @@ export const PTYPlugin = async ({ client, directory }: PluginContext): Promise<P
       pty_read: ptyRead,
       pty_list: ptyList,
       pty_kill: ptyKill,
+      pty_help: ptyHelp,
+    },
+    'tool.definition': async (input, output) => {
+      const description = TOOL_DESCRIPTIONS[input.toolID]
+      if (description) {
+        output.description = description
+      }
     },
     config: async (input) => {
       if (!input.command) {

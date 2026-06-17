@@ -1,7 +1,9 @@
 import { tool } from '@opencode-ai/plugin'
 import { manager } from '../manager.ts'
 import { formatSessionInfo } from '../formatters.ts'
-import DESCRIPTION from './list.txt'
+
+const DESCRIPTION =
+  'List active and retained PTY sessions with IDs, status, commands, and output line counts.'
 
 export const ptyList = tool({
   description: DESCRIPTION,

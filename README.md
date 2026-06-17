@@ -307,13 +307,13 @@ Use `pty_kill` with `cleanup=true` to remove completely.
 ```bash
 git clone https://github.com/shekohex/opencode-pty.git
 cd opencode-pty
-bun ci          # install packages from bun.lock
-bun lint        # Runs Biome linting checks
-bun format      # Runs Biome formatting checks
-bun typecheck   # Runs TypeScript type checking
-bun build:dev   # Build the React app for development
-bun unittest    # Runs the unit tests
-bun test:e2e    # Runs the e2e tests
+brew bundle             # install system dependencies
+make deps               # install packages from bun.lock
+make check              # build, then run typecheck, lint, and format checks
+make build              # build the production bundle
+make test               # run unit tests
+make playwright-install # install Playwright browsers
+make e2e                # run end-to-end tests
 ```
 
 To load a local checkout in OpenCode:

@@ -4,7 +4,9 @@ import { DEFAULT_READ_LIMIT, MAX_LINE_LENGTH } from '../../../shared/constants.t
 import { buildSessionNotFoundError } from '../utils.ts'
 import { formatLine } from '../formatters.ts'
 import type { PTYSessionInfo } from '../types.ts'
-import DESCRIPTION from './read.txt'
+
+const DESCRIPTION =
+  'Read buffered output from a PTY session, optionally with pagination or regex filtering. Call pty_help for details.'
 
 const NOTIFY_ON_EXIT_REMINDER = [
   `<system_reminder>`,
